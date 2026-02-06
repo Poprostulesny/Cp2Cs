@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\native\export.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\native\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6245A8CF-1863-33C4-A92B-2D2505F9FA80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

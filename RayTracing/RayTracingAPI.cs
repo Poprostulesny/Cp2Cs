@@ -80,7 +80,7 @@ public class RayTracingAPI
     public class Lambertian : Material
     {
         public Color color;
-        public Lambertian(Color _color, double _fuzz):base(NativeMethods.CreateLambertian(_color.r, _color.g, _color.b))
+        public Lambertian(Color _color):base(NativeMethods.CreateLambertian(_color.r, _color.g, _color.b))
         {
             color = _color;
         }
@@ -113,13 +113,13 @@ public class RayTracingAPI
         {
             
             native_camera.aspect_ratio      = _aspect_ratio;  // Ratio of image width over height
-            native_camera.   image_width       = _image_width;  // Rendered image width in pixel count
-            native_camera.    samples_per_pixel= _samples_per_pixel;   // Count of random samples for each pixel
-            native_camera.   max_depth         = _max_depth;   // Maximum number of ray bounces into scene
+            native_camera.image_width       = _image_width;  // Rendered image width in pixel count
+            native_camera.samples_per_pixel= _samples_per_pixel;   // Count of random samples for each pixel
+            native_camera.max_depth         = _max_depth;   // Maximum number of ray bounces into scene
             
-            native_camera. vfov     = _vfov;              // Vertical view angle (field of view)
-            native_camera. defocus_angle = _defocus_angle;  // Variation angle of rays through each pixel
-            native_camera. focus_dist = _focus_dist;
+            native_camera.vfov     = _vfov;              // Vertical view angle (field of view)
+            native_camera.defocus_angle = _defocus_angle;  // Variation angle of rays through each pixel
+            native_camera.focus_dist = _focus_dist;
           
             
             if (lookfrom == null)
@@ -141,7 +141,7 @@ public class RayTracingAPI
             }
             if (vup == null)
             {
-                native_camera.vup = new NativeStructs.Triplet{x=0,y=0,z=0};
+                native_camera.vup = new NativeStructs.Triplet{x=0,y=1,z=0};
             }
             else
             {

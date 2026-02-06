@@ -1,0 +1,10 @@
+^C:\USERS\MATEU\DOCUMENTS\P3\CP2CS\RAYTRACING\OBJ\NATIVE\RELEASE\CMAKEFILES\D7C1247B1DFF81B7C31BADE971E5BCA2\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/native -BC:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Release --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Release/rt.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

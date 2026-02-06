@@ -44,6 +44,7 @@ internal static partial class NativeMethods
     }
 
    
+   
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void RenderCallback(int samples, nint buffer);
     

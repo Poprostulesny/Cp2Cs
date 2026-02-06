@@ -1,0 +1,13 @@
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\bin\Debug\net9.0\rt.dll
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\bin\Debug\net9.0\RayTracing.deps.json
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\bin\Debug\net9.0\RayTracing.dll
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\bin\Debug\net9.0\RayTracing.pdb
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.AssemblyInfoInputs.cache
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.AssemblyInfo.cs
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.csproj.CoreCompileInputs.cache
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.sourcelink.json
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.dll
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\refint\RayTracing.dll
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\RayTracing.pdb
+C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\Debug\net9.0\ref\RayTracing.dll

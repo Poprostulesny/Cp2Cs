@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\mateu\Documents\P3\Cp2Cs\RayTracing\obj\native\Release\CMakeFiles\d7c1247b1dff81b7c31bade971e5bca2\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A5BDCD5A-D13A-350E-BA27-7FF8AECDCD43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

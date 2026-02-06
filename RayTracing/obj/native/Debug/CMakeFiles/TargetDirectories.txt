@@ -1,0 +1,3 @@
+C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Debug/CMakeFiles/rt.dir
+C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Debug/CMakeFiles/ALL_BUILD.dir
+C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Debug/CMakeFiles/ZERO_CHECK.dir

@@ -4,7 +4,7 @@ namespace RayTracing;
 
 public class NativeStructs
 {   
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public  struct Triplet
     {
         public double x,y,z;
@@ -13,7 +13,7 @@ public class NativeStructs
             this.x = _x; this.y = _y; this.z = _z;
         }
     }
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public  struct Camera()
     {
         public double aspect_ratio      = 1.0;  // Ratio of image width over height
