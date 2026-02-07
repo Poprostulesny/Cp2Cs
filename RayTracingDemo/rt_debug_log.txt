@@ -1,6 +1,0 @@
-RenderScene: w=100 aspect=1.77778 h=56 spp=10 max_depth=20 vfov=90 lookfrom=(0,0,0) lookat=(0,0,-1) vup=(0,1,0) defocus=0 focus=10
-camera.render: image_width=100 image_height=56
-post-render buffer check: lastNonZeroRow=27 width=100 height=56
-RenderScene: w=100 aspect=1.77778 h=56 spp=10 max_depth=20 vfov=20 lookfrom=(13,2,3) lookat=(0,0,0) vup=(0,1,0) defocus=0.6 focus=10
-camera.render: image_width=100 image_height=56
-post-render buffer check: lastNonZeroRow=55 width=100 height=56

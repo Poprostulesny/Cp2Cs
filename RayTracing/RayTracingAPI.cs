@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace RayTracing;
@@ -183,36 +184,70 @@ public class RayTracingAPI
     {
         public string? path_to_save;
         private readonly NativeMethods.RenderCallback _callback;
-        public Eyes(string? _path_to_save = null)
+        private Action<ReadOnlySpan<byte>>? _update_image;
+        private Action<string>? _update_text;
+        private int h;
+        private int w;
+        private int samples;
+        private Stopwatch stopwatch = new Stopwatch();
+        public Eyes(string? _path_to_save = null, Action<ReadOnlySpan<byte>>? update_image = null, Action<string>?update_text = null)
         {
             path_to_save= _path_to_save;
             _callback = OnRender;
+            _update_image = update_image;
+            _update_text = update_text;
         }
-
+    
         private void OnRender(int samples, nint buffer)
         {
+            
+            if (_update_image != null)
+            {
+                unsafe {
+                    var span = new ReadOnlySpan<byte>((byte*)buffer, 4*w*h);
+                    _update_image(span);
+                }
+            }
+
+            if (_update_text != null)
+            {   
+                _update_text($"Samples:{samples}/{this.samples}. Elapsed time: {FormatElapsedTime(stopwatch.Elapsed)}");
+            }
+           
         }
         
         public void OpenEyes(Camera camera, Scene scene)
-        {
-            int height = (int)(camera.native_camera.image_width / camera.native_camera.aspect_ratio);
-            height = (height < 1) ? 1 : height;
-            byte[] buffer = new byte[height * 4 * camera.native_camera.image_width];
+        {   
+            h = (int)(camera.native_camera.image_width / camera.native_camera.aspect_ratio);
+            h = (h < 1) ? 1 : h;
+            w= camera.native_camera.image_width;
+            samples = camera.native_camera.samples_per_pixel;
+            byte[] buffer = new byte[h * 4 * camera.native_camera.image_width];
             var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {   
                 nint ptr = handle.AddrOfPinnedObject();
+                stopwatch.Start();
                 NativeMethods.RenderScene(camera.native_camera, scene.Handle, ptr, _callback);
+                stopwatch.Stop();
                 if (path_to_save != null)
                 {
-                    NativeMethods.SavePng(camera.native_camera.image_width, height,  ptr, path_to_save);
+                    NativeMethods.SavePng(camera.native_camera.image_width, h,  ptr, path_to_save);
                 }
             }
             finally{
+                
                 handle.Free();
             }
         }
            
+    }
+    static string FormatElapsedTime(TimeSpan elapsed)
+    {
+        int totalMinutes = (int)elapsed.TotalMinutes;
+        int seconds = elapsed.Seconds;
+        int milliseconds = elapsed.Milliseconds;
+        return $"{totalMinutes}m {seconds}s {milliseconds}ms";
     }
 
 }

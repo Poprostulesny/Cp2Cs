@@ -36,10 +36,9 @@ class camera {
     void render(const hittable& world) {
         initialize();
 
-        std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-
+        
         for (int j = 0; j < image_height; j++) {
-            std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+          
             for (int i = 0; i < image_width; i++) {
                 color pixel_color(0,0,0);
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
@@ -50,17 +49,15 @@ class camera {
             }
         }
 
-        std::clog << "\rDone.                 \n";
+   
     }
-    //change this guy
+
     void render(const hittable& world, uint8_t* buffer, void (*callback)(int, uint8_t*)) {
         initialize();
 
 
         static const interval intensity(0.000, 0.999);
         std::vector<color> accum_buffer(image_width * image_height, color(0,0,0));
-        int cores = std::thread::hardware_concurrency();
-        thread threads[cores];
         for (int sample = 1; sample <= samples_per_pixel; sample++) {
             for (int j = 0; j < image_height; j++) {
                 for (int i = 0; i < image_width; i++) {
@@ -121,7 +118,7 @@ class camera {
     void initialize() {
         image_height = int(image_width / aspect_ratio);
         image_height = (image_height < 1) ? 1 : image_height;
-
+        
         pixel_samples_scale = 1.0 / samples_per_pixel;
 
         center = lookfrom;

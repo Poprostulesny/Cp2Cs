@@ -1,12 +1,15 @@
 using Avalonia.Media;
 using RayTracing;
 using System.Diagnostics;
+using Windowing;
 namespace RayTracingDemo;
 
 class Program
 {
     static void Main(string[] args)
     {
+        
+        
         double aspect = 16.0 / 9.0;
         int width = 500;
         int samples = 10;
@@ -67,12 +70,33 @@ class Program
             _defocus_angle: 0.6,
             _focus_dist: 10.0
         );
-        var eye = new RayTracingAPI.Eyes("output.png");
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-        eye.OpenEyes(cam, scene);
-        stopwatch.Stop();
-        Console.WriteLine($"Elapsed time: {FormatElapsedTime(stopwatch.Elapsed)}");
+        int height = (int)(width /aspect);
+        height = (height < 1) ? 1 : height;
+        Viewer.Show(width, height, "Rendering of the Ryatracing in a Weekend Cover", updater =>
+        {
+            var eye = new RayTracingAPI.Eyes("output.png", span =>
+            {
+                if (updater.IsClosed)
+                {
+                    return;
+                }
+
+                updater.UpdateImage(span);
+            }, str =>
+            {
+                if (updater.IsClosed)
+                {
+                    return;
+                }
+
+                updater.UpdateStatus(str);
+
+            });
+            eye.OpenEyes(cam, scene);
+        });  
+            
+            
+        
         foreach (var material in materials)
         {
             material.Dispose();
@@ -119,11 +143,5 @@ class Program
         };
     }
 
-    static string FormatElapsedTime(TimeSpan elapsed)
-    {
-        int totalMinutes = (int)elapsed.TotalMinutes;
-        int seconds = elapsed.Seconds;
-        int milliseconds = elapsed.Milliseconds;
-        return $"{totalMinutes}m {seconds}s {milliseconds}ms";
-    }
+    
 }
