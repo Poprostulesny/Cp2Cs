@@ -1,11 +1,11 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using System;
 
 namespace Windowing;
 
-public partial class App : Application
+public class App : Application
 {
     public static int Width { get; set; } = 800;
     public static int Height { get; set; } = 450;
@@ -23,7 +23,7 @@ public partial class App : Application
         {
             var window = new MainWindow();
             desktop.MainWindow = window;
-            
+
             window.InitializeImage(Width, Height);
             window.Title = Title;
 

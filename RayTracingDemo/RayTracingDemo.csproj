@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\RayTracing\RayTracing.csproj" />
-      <ProjectReference Include="..\Windowing\Windowing.csproj" />
+        <ProjectReference Include="..\RayTracing\RayTracing.csproj"/>
+        <ProjectReference Include="..\Windowing\Windowing.csproj"/>
     </ItemGroup>
 
     <PropertyGroup>

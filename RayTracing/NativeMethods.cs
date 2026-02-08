@@ -1,53 +1,16 @@
-using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
 namespace RayTracing;
 
-internal static partial class NativeMethods 
-{   
-    private const string LibName = "rt";
-    
-    public partial class NativeStructs;
-
-    internal sealed class MaterialSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        internal MaterialSafeHandle() : base(true) { }
-
-        internal MaterialSafeHandle(nint handle) : base(true)
-        {
-            SetHandle(handle);
-        }
-
-        protected override bool ReleaseHandle()
-        {
-            DestroyMaterial(handle);
-            return true;
-        }
-    }
-
-    internal sealed class SceneSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        internal SceneSafeHandle() : base(true) { }
-
-        internal SceneSafeHandle(nint handle) : base(true)
-        {
-            SetHandle(handle);
-        }
-
-        protected override bool ReleaseHandle()
-        {
-            DestroyScene(handle);
-            return true;
-        }
-    }
-
-   
-   
+internal static partial class NativeMethods
+{
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void RenderCallback(int samples, nint buffer);
-    
+
+    private const string LibName = "rt";
+
     [LibraryImport(LibName, EntryPoint = "CreateLambertian")]
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
     private static partial nint CreateLambertianRaw(double r, double g, double b);
@@ -65,7 +28,7 @@ internal static partial class NativeMethods
     {
         return new MaterialSafeHandle(CreateDielectricRaw(refreaction_index));
     }
-    
+
     [LibraryImport(LibName, EntryPoint = "CreateMetal")]
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
     private static partial nint CreateMetalRaw(double r, double g, double b, double fuzz);
@@ -96,8 +59,8 @@ internal static partial class NativeMethods
     internal static void SceneAddSphere(SceneSafeHandle scene, RayTracing.NativeStructs.Triplet center, double radius,
         MaterialSafeHandle material)
     {
-        nint sceneHandle = scene.DangerousGetHandle();
-        nint materialHandle = material.DangerousGetHandle();
+        var sceneHandle = scene.DangerousGetHandle();
+        var materialHandle = material.DangerousGetHandle();
         SceneAddSphereRaw(sceneHandle, center, radius, materialHandle);
         GC.KeepAlive(scene);
         GC.KeepAlive(material);
@@ -105,9 +68,11 @@ internal static partial class NativeMethods
 
     [LibraryImport(LibName, EntryPoint = "RenderScene")]
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    private static partial void RenderSceneRaw(RayTracing.NativeStructs.Camera config, nint scene, nint buffer, RenderCallback callback);
+    private static partial void RenderSceneRaw(RayTracing.NativeStructs.Camera config, nint scene, nint buffer,
+        RenderCallback callback);
 
-    internal static void RenderScene(RayTracing.NativeStructs.Camera config, SceneSafeHandle scene, nint buffer, RenderCallback callback)
+    internal static void RenderScene(RayTracing.NativeStructs.Camera config, SceneSafeHandle scene, nint buffer,
+        RenderCallback callback)
     {
         RenderSceneRaw(config, scene.DangerousGetHandle(), buffer, callback);
         GC.KeepAlive(scene);
@@ -121,5 +86,41 @@ internal static partial class NativeMethods
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
     public static partial int SavePng(int w, int h, nint buffer, [MarshalAs(UnmanagedType.LPStr)] string pathname);
 
+    public class NativeStructs;
 
+    internal sealed class MaterialSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
+    {
+        internal MaterialSafeHandle() : base(true)
+        {
+        }
+
+        internal MaterialSafeHandle(nint handle) : base(true)
+        {
+            SetHandle(handle);
+        }
+
+        protected override bool ReleaseHandle()
+        {
+            DestroyMaterial(handle);
+            return true;
+        }
+    }
+
+    internal sealed class SceneSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
+    {
+        internal SceneSafeHandle() : base(true)
+        {
+        }
+
+        internal SceneSafeHandle(nint handle) : base(true)
+        {
+            SetHandle(handle);
+        }
+
+        protected override bool ReleaseHandle()
+        {
+            DestroyScene(handle);
+            return true;
+        }
+    }
 }

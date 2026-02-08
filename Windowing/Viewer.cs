@@ -1,14 +1,16 @@
 using System;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Threading;
 
 namespace Windowing;
 
 public interface IWindowUpdate
 {
+    bool IsClosed { get; }
     void UpdateImage(ReadOnlySpan<byte> data);
     void UpdateStatus(string text);
-    bool IsClosed { get; }
 }
 
 public class Viewer
@@ -18,8 +20,8 @@ public class Viewer
         App.Width = width;
         App.Height = height;
         App.Title = title;
-        
-        App.OnStartup = (window) =>
+
+        App.OnStartup = window =>
         {
             var updater = new WindowUpdater(window);
             Task.Run(() =>
@@ -30,10 +32,7 @@ public class Viewer
                 }
                 catch (Exception ex)
                 {
-                    Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                    {
-                        updater.UpdateStatus($"Error: {ex.Message}");
-                    });
+                    Dispatcher.UIThread.Post(() => { updater.UpdateStatus($"Error: {ex.Message}"); });
                     Console.WriteLine($"Render Loop Crash: {ex}");
                 }
             });
@@ -42,32 +41,31 @@ public class Viewer
         AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace()
-            .StartWithClassicDesktopLifetime(args: Array.Empty<string>(), shutdownMode: Avalonia.Controls.ShutdownMode.OnMainWindowClose);
+            .StartWithClassicDesktopLifetime(Array.Empty<string>(), ShutdownMode.OnMainWindowClose);
     }
-    
+
     private class WindowUpdater : IWindowUpdate
     {
         private readonly MainWindow _win;
-        private bool _isClosed = false;
-        
+
         public WindowUpdater(MainWindow win)
         {
             _win = win;
-            _win.Closed += (s, e) => _isClosed = true;
+            _win.Closed += (s, e) => IsClosed = true;
         }
-        
+
         public void UpdateImage(ReadOnlySpan<byte> data)
         {
-            if (_isClosed) return;
+            if (IsClosed) return;
             _win.UpdateImage(data);
         }
 
         public void UpdateStatus(string text)
         {
-            if (_isClosed) return;
+            if (IsClosed) return;
             _win.UpdateStatus(text);
         }
-        
-        public bool IsClosed => _isClosed;
+
+        public bool IsClosed { get; private set; }
     }
 }
