@@ -57,7 +57,11 @@ public:
     void render(const hittable& world, uint8_t* buffer, void (*callback)(int, uint8_t*))
     {
         initialize();
-        int thread_count = 8;
+        unsigned int thread_count = std::thread::hardware_concurrency();
+        if (thread_count<=0)
+        {
+            thread_count = 1;
+        }
         vector<thread> thread_pool(thread_count);
         // std::barrier<> sync_point(thread_count);
 
@@ -72,6 +76,7 @@ public:
                 {
                     for (int j = id; j < image_height; j += thread_count)
                     {
+                        
                         for (int i = 0; i < image_width; i++)
                         {
                             ray r = get_ray(i, j);
