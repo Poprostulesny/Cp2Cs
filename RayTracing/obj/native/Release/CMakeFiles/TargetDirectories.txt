@@ -1,3 +1,0 @@
-C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Release/CMakeFiles/rt.dir
-C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Release/CMakeFiles/ALL_BUILD.dir
-C:/Users/mateu/Documents/P3/Cp2Cs/RayTracing/obj/native/Release/CMakeFiles/ZERO_CHECK.dir
